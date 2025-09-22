@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Đồng hồ đếm ngược</title>
+</head>
+<body>
+    <input type="text" id="nhapsogiay" placeholder="Nhập số giây"/>
+    <input type="button" id="start" value="Bắt đầu"/>
+    <input type="button" id="reset" value="Reset"/>
+    <input type="button" id="stop" value="Dừng"/>
+    <div id="time"></div>
+
+    <script>
+        // Truy xuất phần tử trong DOM
+        const a = document.getElementById('nhapsogiay');
+        const b = document.getElementById('start');
+        const hienthi = document.getElementById('time');
+        const stop = document.getElementById('stop');
+        const reset = document.getElementById('reset');
+
+        let timer; // lưu ID setInterval
+
+        // Nút Bắt đầu
+        b.addEventListener('click', () => {
+            // Nếu đã có timer cũ thì dừng trước
+            if (timer) {
+                clearInterval(timer);
+            }
+
+            let c = parseInt(a.value);
+            if (isNaN(c) || c <= 0) {
+                hienthi.innerText = 'Nhập số lớn hơn 0';
+                return;
+            }
+
+            hienthi.innerText = c;
+
+            // Tạo interval mới
+            timer = setInterval(() => {
+                c--;
+                hienthi.innerText = c;
+
+                if (c === 0) {
+                    clearInterval(timer);
+                    hienthi.innerText = "Hết giờ";
+                }
+            }, 1000);
+        });
+
+        // Nút Dừng
+        stop.addEventListener('click', () => {
+            clearInterval(timer);
+        });
+
+        // Nút Reset
+        reset.addEventListener('click', () => {
+            clearInterval(timer);
+            hienthi.innerText = "";
+            a.value = "";
+        });
+    </script>
+</body>
+</html>
